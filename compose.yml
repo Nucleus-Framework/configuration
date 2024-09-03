@@ -1,0 +1,6 @@
+services:
+  nucleus-framework-configuration:
+    build: ./docker/.
+    container_name: nucleus-framework-configuration
+    volumes:
+      - .:/usr/src/app

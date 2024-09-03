@@ -1,0 +1,6 @@
+/docker/mysql/*
+/node_modules
+/vendor
+.phpunit.result.cache
+/.idea
+/.vscode
