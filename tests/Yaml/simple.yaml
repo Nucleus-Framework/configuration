@@ -1,0 +1,8 @@
+# Basic key-value pair
+name: José Couves
+age: 36
+# Nested structure
+street: 123 Elm Street
+city: Arda
+state: AR
+postal_code: 62704

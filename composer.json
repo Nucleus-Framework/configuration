@@ -1,7 +1,12 @@
 {
     "name": "nucleus-framework/configuration",
     "description": "Developed to simplify the reading and management of configurations in your applications",
+    "version": "0.0.1",
     "keywords": [
+        "configuration",
+        "reader",
+        "yaml",
+        "dotenv",
         "nucleus",
         "feramework",
         "php"
