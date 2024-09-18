@@ -9,11 +9,14 @@ use RuntimeException;
 
 final class Reader
 {
+    /** @var array<mixed> */
     private array $content = [];
 
     public function __construct(private Adapter $adapter)
-    {}
+    {
+    }
 
+    /** @return string|array<mixed> */
     public function get(string $key): string|array
     {
         if (array_key_exists($key, $this->content) === false) {
@@ -23,6 +26,7 @@ final class Reader
         return $this->content[$key];
     }
 
+    /** @return array<mixed> */
     public function collectAll(): array
     {
         return $this->content;

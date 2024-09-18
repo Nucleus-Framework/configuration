@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace  NucleusFramework\Configuration\Adapters\Yaml;
+namespace NucleusFramework\Configuration\Adapters\Yaml;
 
 use NucleusFramework\Configuration\Adapters\Adapter;
 use NucleusFramework\Configuration\Adapters\Yaml\Node;
@@ -12,8 +12,10 @@ class Yaml implements Adapter
 {
     private string $fileContent;
 
+    /** @var array<mixed> */
     private array $parsedData = [];
 
+    /** @var array<mixed> */
     private array $contentBlocks = [];
 
     public function readFromFile(string $fullPath): void
@@ -22,7 +24,13 @@ class Yaml implements Adapter
             throw new RuntimeException('File not exists');
         }
 
-        $this->fileContent = file_get_contents($fullPath);
+        $fileContent = file_get_contents($fullPath);
+
+        if ($fileContent === false) {
+            throw new RuntimeException('Could not read file');
+        }
+
+        $this->fileContent = $fileContent;
     }
 
     public function parse(): array
@@ -40,10 +48,12 @@ class Yaml implements Adapter
         return $this->parsedData;
     }
 
+    /** @param array<mixed> $block */
     private function parserBlock(string $node, array $block): Node
     {
         $previousNode = '';
         $isChildren   = false;
+        $parsedBlock  = [];
 
         foreach ($block as $line) {
             $content = $this->parserBlockLine($line);
@@ -65,7 +75,7 @@ class Yaml implements Adapter
             }
 
             if (
-                $content['isChildren'] === false 
+                $content['isChildren'] === false
                 && $content['value'] !== ""
                 && $isChildren === true
             ) {
@@ -84,17 +94,24 @@ class Yaml implements Adapter
         return new Node($node, $parsedBlock, $isChildren);
     }
 
+    /** @return array<mixed> */
     private function parserBlockLine(string $line): array
     {
         $explode = explode(':', $line);
+        $key     = trim($explode[0]);
+        $value   = null;
+        if (array_key_exists(0, $explode) === true) {
+            $value = trim($explode[1]);
+        }
 
         return [
-            'key'        => trim($explode[0]),
-            'value'      => trim($explode[1]) ?? null,
-            'isChildren' => $explode[1] === ""
+            'key'        => $key,
+            'value'      => $value,
+            'isChildren' => $value === ""
         ];
     }
 
+    /** @return array<mixed> */
     private function separateIntoBlocks(string $yaml): array
     {
         $lines    = explode(PHP_EOL, trim($yaml));

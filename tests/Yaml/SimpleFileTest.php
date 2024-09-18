@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace NucleusFramework\Configuration\Tests\Yaml;
 
@@ -15,14 +17,14 @@ final class SimpleFileTest extends TestCase
 
         $this->expectExceptionMessage('Configudation file not nound');
 
-        $read = new Reader(new Yaml);
+        $read = new Reader(new Yaml());
         $read->readFromFile('/invalid/path/invalid-file.yaml');
     }
 
     public function testReadFile(): void
     {
-        $read = new Reader(new Yaml);
-        $read->readFromFile(__DIR__.'/simple.yaml');
+        $read = new Reader(new Yaml());
+        $read->readFromFile(__DIR__ . '/simple.yaml');
 
         $configurations = $read->collectAll();
 
@@ -38,8 +40,8 @@ final class SimpleFileTest extends TestCase
 
     public function testFindByKey(): void
     {
-        $read = new Reader(new Yaml);
-        $read->readFromFile(__DIR__.'/simple.yaml');
+        $read = new Reader(new Yaml());
+        $read->readFromFile(__DIR__ . '/simple.yaml');
 
         $this->assertEquals('José Couves', $read->get('name'));
     }
@@ -50,8 +52,8 @@ final class SimpleFileTest extends TestCase
 
         $this->expectExceptionMessage(sprintf('The key "foo" not exists'));
 
-        $read = new Reader(new Yaml);
-        $read->readFromFile(__DIR__.'/simple.yaml');
+        $read = new Reader(new Yaml());
+        $read->readFromFile(__DIR__ . '/simple.yaml');
 
         $read->get('foo');
     }

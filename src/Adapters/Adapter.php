@@ -8,5 +8,6 @@ interface Adapter
 {
     public function readFromFile(string $fullPath): void;
 
+    /** @return array<mixed> */
     public function parse(): array;
 }
