@@ -24,7 +24,7 @@ final class SimpleFileTest extends TestCase
     public function testReadFile(): void
     {
         $read = new Reader(new Yaml());
-        $read->readFromFile(__DIR__ . '/simple.yaml');
+        $read->readFromFile(__DIR__ . '/files/simple.yaml');
 
         $configurations = $read->collectAll();
 
@@ -41,7 +41,7 @@ final class SimpleFileTest extends TestCase
     public function testFindByKey(): void
     {
         $read = new Reader(new Yaml());
-        $read->readFromFile(__DIR__ . '/simple.yaml');
+        $read->readFromFile(__DIR__ . '/files/simple.yaml');
 
         $this->assertEquals('José Couves', $read->get('name'));
     }
@@ -53,7 +53,7 @@ final class SimpleFileTest extends TestCase
         $this->expectExceptionMessage(sprintf('The key "foo" not exists'));
 
         $read = new Reader(new Yaml());
-        $read->readFromFile(__DIR__ . '/simple.yaml');
+        $read->readFromFile(__DIR__ . '/files/simple.yaml');
 
         $read->get('foo');
     }

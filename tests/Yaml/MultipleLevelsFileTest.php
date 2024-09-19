@@ -9,7 +9,7 @@ use NucleusFramework\Configuration\Reader;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-final class MultipleLevelsTest extends TestCase
+final class MultipleLevelsFileTest extends TestCase
 {
     public function testFileNotFound(): void
     {
@@ -24,7 +24,7 @@ final class MultipleLevelsTest extends TestCase
     public function testReadFile(): void
     {
         $reader = new Reader(new Yaml());
-        $reader->readFromFile(__DIR__ . '/multiple-levels.yaml');
+        $reader->readFromFile(__DIR__ . '/files/multiple-levels.yaml');
 
         $configurationList = $reader->collectAll();
 
@@ -34,7 +34,7 @@ final class MultipleLevelsTest extends TestCase
     public function testReadAppInfo(): void
     {
         $reader = new Reader(new Yaml());
-        $reader->readFromFile(__DIR__ . '/multiple-levels.yaml');
+        $reader->readFromFile(__DIR__ . '/files/multiple-levels.yaml');
 
         $configurationList = $reader->collectAll();
 
@@ -53,7 +53,7 @@ final class MultipleLevelsTest extends TestCase
     public function testReadDatabaseInfo(): void
     {
         $reader = new Reader(new Yaml());
-        $reader->readFromFile(__DIR__ . '/multiple-levels.yaml');
+        $reader->readFromFile(__DIR__ . '/files/multiple-levels.yaml');
 
         $configurationList = $reader->collectAll();
 
@@ -70,7 +70,7 @@ final class MultipleLevelsTest extends TestCase
     public function testReadServerInfo(): void
     {
         $reader = new Reader(new Yaml());
-        $reader->readFromFile(__DIR__ . '/multiple-levels.yaml');
+        $reader->readFromFile(__DIR__ . '/files/multiple-levels.yaml');
 
         $configurationList = $reader->collectAll();
 

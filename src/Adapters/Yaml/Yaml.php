@@ -58,40 +58,80 @@ class Yaml implements Adapter
         foreach ($block as $line) {
             $content = $this->parserBlockLine($line);
 
-            if ($content['isChildren'] === false && $isChildren === false) {
-                $parsedBlock[$node][$content['key']] = $content['value'];
+            $this->addIfSimpleNode($node, $content, $parsedBlock, $isChildren);
 
-                continue;
-            }
+            $this->addIfFatherNode($content, $previousNode, $isChildren);
 
-            if ($content['isChildren'] === true && $content['value'] === "") {
-                $indice = "{$previousNode}.{$content['key']}";
-
-                $previousNode = $indice;
-
-                $isChildren = true;
-
-                continue;
-            }
-
-            if (
-                $content['isChildren'] === false
-                && $content['value'] !== ""
-                && $isChildren === true
-            ) {
-                $indice = "{$previousNode}.{$content['key']}";
-
-                $indice = str_starts_with($indice, '.')
-                    ? substr($indice, 1, mb_strlen($indice))
-                    : $indice;
-
-                $parsedBlock[$node][$indice] = $content['value'];
-
-                continue;
-            }
+            $this->addIfChildToFatherNode(
+                $node,
+                $content,
+                $parsedBlock,
+                $previousNode,
+                $isChildren
+            );
         }
 
         return new Node($node, $parsedBlock, $isChildren);
+    }
+
+    /**
+     * @param array<string,mixed> $content
+     * @param array<string,string> $parsedBlock
+     */
+    private function addIfSimpleNode(
+        string $node,
+        array $content,
+        array &$parsedBlock,
+        bool &$isChildren
+    ): void {
+        $isSimpleNode = $content['isChildren'] === false && $isChildren === false;
+
+        if ($isSimpleNode) {
+            $parsedBlock[$node][$content['key']] = $content['value'];
+        }
+    }
+
+    /** @param array<string,mixed> $content */
+    private function addIfFatherNode(
+        array $content,
+        string &$previousNode,
+        bool &$isChildren
+    ): void {
+        $isFatherNode = $content['isChildren'] === true && $content['value'] === "";
+
+        if ($isFatherNode) {
+            $indice = "{$previousNode}.{$content['key']}";
+
+            $previousNode = $indice;
+
+            $isChildren = true;
+        }
+    }
+
+    /**
+     * @param array<string,mixed> $content
+     * @param array<string,mixed> $parsedBlock
+     */
+    private function addIfChildToFatherNode(
+        string &$node,
+        array $content,
+        array &$parsedBlock,
+        string &$previousNode,
+        bool &$isChildren
+    ): void {
+        $isChildToFatherNode = $content['isChildren'] === false
+            && $content['value'] !== ""
+            && $isChildren === true;
+
+        if ($isChildToFatherNode) {
+            $indice = "{$previousNode}.{$content['key']}";
+
+            $indice = str_starts_with($indice, '.')
+                ? substr($indice, 1, mb_strlen($indice))
+                : $indice;
+
+            $parsedBlock[$node][$indice] = $content['value'];
+        }
     }
 
     /** @return array<mixed> */
