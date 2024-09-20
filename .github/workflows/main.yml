@@ -11,6 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+
+      - name: Install
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: install
+
       - name: Run all tests
         uses: php-actions/composer@v6
         with:
