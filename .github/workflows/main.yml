@@ -15,5 +15,5 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: "8.3"
-          command: composer run all
+          command: run all
     
