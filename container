@@ -1,0 +1,7 @@
+#!/bin/bash
+
+PHP_CONTAINER='nucleus-framework-configuration'
+
+docker-compose up -d 1> /dev/null 2> /dev/stdout
+
+docker exec -it $PHP_CONTAINER $@

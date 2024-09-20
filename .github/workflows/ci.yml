@@ -1,0 +1,45 @@
+name: CI Configuration
+
+on:
+  pull_request:
+    branches: ["main", "develop"]
+  merge_group:
+    branches: ["main", "develop"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: install
+
+      - name: Run unit tests
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run tests
+
+      - name: Run Mess Detector
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run mess
+
+      - name: Run PSR
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run psr
+
+      - name: Run PHP Stan
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run stan
