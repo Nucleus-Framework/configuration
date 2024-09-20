@@ -12,15 +12,32 @@ jobs:
       - uses: actions/checkout@v3
 
 
-      - name: Install
+      - name: Install dependencies
         uses: php-actions/composer@v6
         with:
           php_version: "8.3"
           command: install
 
-      - name: Run all tests
+      - name: Run unit tests
         uses: php-actions/composer@v6
         with:
           php_version: "8.3"
-          command: run all
-    
+          command: run tests
+
+      - name: Run Mess Detector
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run mess
+
+      - name: Run PSR
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run psr
+
+      - name: Run PHP Stan
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.3"
+          command: run stan
