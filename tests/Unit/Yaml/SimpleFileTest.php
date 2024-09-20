@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NucleusFramework\Configuration\Tests\Yaml;
+namespace NucleusFramework\Configuration\Tests\Unit\Yaml;
 
 use NucleusFramework\Configuration\Adapters\Yaml\Yaml;
 use NucleusFramework\Configuration\Reader;
