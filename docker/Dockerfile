@@ -16,7 +16,9 @@ RUN apt-get update -y \
         libicu-dev \
         libpng-dev \
         libjpeg-dev \
-        libfreetype6-dev 
+        libfreetype6-dev
+
+RUN rm -rf /var/lib/apt/lists/*
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
