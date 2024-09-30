@@ -2,8 +2,8 @@ FROM php:8.3-fpm
 
 LABEL maintainer="Diego Brocanelli <diegod2@msn.com>"
 
-RUN apt-get update -y && \
-    apt-get -y --no-install-recommends install \
+RUN apt-get update -y \
+    && apt-get -y --no-install-recommends install \
         openssl \
         build-essential \
         software-properties-common \
